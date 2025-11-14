@@ -29,14 +29,6 @@ Inspect the full data structure that Twitter/X returns for a given user—no off
 ## Installation
 
 ```bash
-# 1) Clone your project, then create & activate a virtual environment
-python -m venv .venv
-# macOS/Linux
-source .venv/bin/activate
-# Windows (PowerShell)
-# .\.venv\Scripts\Activate.ps1
-
-# 2) Install dependencies
 pip install -r requirements.txt
 ```
 
