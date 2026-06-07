@@ -22,10 +22,10 @@ def load_auth_credentials():
     if not os.path.exists('AUTH.yaml'):
         print("AUTH.yaml not found. Creating template file...")
         return create_auth_template()
-    
+
     with open('AUTH.yaml', 'r') as f:
         auth = yaml.safe_load(f)
-    
+
     return auth
 
 def validate_auth_credentials(auth):
@@ -39,35 +39,32 @@ def validate_auth_credentials(auth):
     return True
 
 def main():
-    # Load and validate credentials
     auth = load_auth_credentials()
     if not validate_auth_credentials(auth):
         return
-    
-    # Setup command-line arguments
+
     parser = argparse.ArgumentParser(description='Inspect Twitter user data structure')
     parser.add_argument('username', help='Twitter username to inspect')
     args = parser.parse_args()
-    
+
     # Initialize scraper
     scraper = Scraper(cookies=auth)
-    
+
     # Get target user information
     try:
         user_data = scraper.users([args.username])
         if not user_data or not user_data[0].get('data', {}).get('user', {}).get('result'):
             print(f"Error: User '{args.username}' not found or inaccessible")
             return
-            
+
         # Extract the full user result data
         user_result = user_data[0]['data']['user']['result']
-        
-        # Print YAML representation of the full data structure
+
         print("=" * 80)
         print(f"Full data structure for @{args.username}:")
         print("=" * 80)
         print(yaml.dump(user_result, default_flow_style=False, sort_keys=False, allow_unicode=True, width=1000))
-        
+
     except Exception as e:
         print(f"Error fetching user data: {str(e)}")
         return

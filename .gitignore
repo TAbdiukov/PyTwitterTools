@@ -164,3 +164,5 @@ cython_debug/
 ## Repo-specific
 AUTH.yaml
 listdump.md
+_meta_*
+*.patch

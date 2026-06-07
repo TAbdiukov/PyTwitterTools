@@ -1,77 +1,52 @@
-# Twitter/X Inspection Tools (Python)
+# Twitter/X Inspection Tools
 
-Inspect the full data structure that Twitter/X returns for a given user—no official API key required. This tiny CLI tool reads your web-session cookies (`auth_token` and `ct0`) from a local `AUTH.yaml`, uses `twitter-api-client`’s `Scraper`, and prints the user record as nicely formatted YAML.
+[![GitHub](https://img.shields.io/badge/GitHub-TAbdiukov/PyTwitterTools-black?logo=github)](https://github.com/TAbdiukov/PyTwitterTools)
+![License](https://img.shields.io/github/license/TAbdiukov/PyTwitterTools)
 
-> ✅ Great for reverse‑engineering fields, exploring what a user object looks like, or debugging third‑party clients.
+[![buymeacoffee](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/tabdiukov)
 
----
+Inspect the raw Twitter/X user payload for a username without an official API key.
 
-## Features
-
-* 🔐 Simple cookie‑based auth (no OAuth)
-* 🧾 Auto‑creates an `AUTH.yaml` template on first run
-* 🧰 Dumps complete payload in readable YAML
-* 🧵 Works well with shell redirection (save to file, pipe to `grep`, etc.)
-
----
+The script reads browser session cookies from `AUTH.yaml`, calls `twitter-api-client`'s `Scraper`, and prints the user result as YAML.
 
 ## Requirements
 
-* **Python**: 3.8+ recommended
-* **OS**: macOS, Linux, or Windows
-* **Dependencies** (installed via `requirements.txt`):
-
-  * `twitter-api-client>=0.10.22`
-  * `PyYAML>=6.0.1`
-
----
-
-## Installation
+- Python 3.8+
+- Dependencies from `requirements.txt`
 
 ```bash
 pip install -r requirements.txt
 ```
 
----
+## Authentication
 
-## Authentication (one‑time setup)
-
-This script uses your **browser session cookies**. You need two values: `auth_token` and `ct0`.
-
-1. Log in to **twitter.com** or **x.com** in your desktop browser.
-2. Open **Developer Tools** → **Application/Storage** → **Cookies**.
-3. Find the cookie names:
-
-   * `auth_token`
-   * `ct0`
-4. Copy their values (long strings) and paste them into `AUTH.yaml` like so:
+Create `AUTH.yaml` in the project directory:
 
 ```yaml
 auth_token: "PASTE_YOUR_AUTH_TOKEN_HERE"
 ct0: "PASTE_YOUR_CT0_TOKEN_HERE"
 ```
 
-> 💡 First run convenience: if `AUTH.yaml` is missing, the script creates a template with placeholders. Just edit and rerun.
+Get both values from a logged-in browser session:
 
-**Security tip:** Treat these values like passwords.
+1. Open `twitter.com` or `x.com`.
+2. Open Developer Tools.
+3. Go to Application/Storage → Cookies.
+4. Copy the `auth_token` and `ct0` cookie values.
 
----
+If `AUTH.yaml` is missing, the script creates a template on first run. Edit it, then run the command again.
+
+Treat these cookies like passwords. Do not commit `AUTH.yaml`.
 
 ## Usage
 
 ```bash
-# Basic usage
 python twitter_info.py <username>
-
-# Examples
 python twitter_info.py jack
-python twitter_info.py TwitterDev
-
-# Save output to a file
 python twitter_info.py jack > jack.yaml
 ```
 
-On success, you’ll see something like:
+Example output:
 
 ```
 ================================================================================
@@ -91,14 +66,8 @@ legacy:
   ...
 ```
 
----
+## Notes
 
-## Ethics & Terms
-
-* This tool uses your authenticated session cookies. **Respect Twitter/X’s Terms of Service** and applicable laws.
-* Only access data you’re allowed to access, and avoid excessive or abusive scraping.
-* Store credentials securely and rotate them if you suspect exposure.
-
----------------------------------
+Use only accounts and data you are allowed to access. Respect Twitter/X's Terms of Service, applicable law, and rate limits.
 
 Tim Abdiukov
